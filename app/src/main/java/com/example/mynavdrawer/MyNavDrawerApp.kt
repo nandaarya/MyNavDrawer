@@ -51,6 +51,7 @@ fun MyNavDrawerApp() {
         ModalNavigationDrawer(
             modifier = Modifier.padding(paddingValues),
             drawerState = drawerState,
+            gesturesEnabled = drawerState.isOpen,
             drawerContent = {
                 ModalDrawerSheet {
                     Spacer(Modifier.height(12.dp))
