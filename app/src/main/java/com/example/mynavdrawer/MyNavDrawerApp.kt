@@ -1,5 +1,6 @@
 package com.example.mynavdrawer
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
@@ -96,12 +98,22 @@ fun MyNavDrawerApp() {
                             onClick = {
                                 scope.launch {
                                     drawerState.close()
-                                    snackbarHostState.showSnackbar(
-                                        message = context.resources.getString(R.string.coming_soon, item.title),
+                                    val snackbarResult = snackbarHostState.showSnackbar(
+                                        message = context.resources.getString(
+                                            R.string.coming_soon,
+                                            item.title
+                                        ),
                                         actionLabel = context.resources.getString(R.string.subscribe_question),
                                         withDismissAction = true,
                                         duration = SnackbarDuration.Short
                                     )
+                                    if (snackbarResult == SnackbarResult.ActionPerformed) {
+                                        Toast.makeText(
+                                            context,
+                                            context.resources.getString(R.string.subscribed_info),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                                 selectedItem.value = item
                             },
